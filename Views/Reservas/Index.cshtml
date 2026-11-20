@@ -1,0 +1,26 @@
+@model IEnumerable<Reserva>
+@{ ViewData["Title"] = "Reservas"; }
+<div class="d-flex justify-content-between mb-3">
+    <h2>Reservas</h2>
+    <a class="btn btn-primary" asp-action="Create">Nueva reserva</a>
+</div>
+<table class="table table-striped align-middle">
+    <thead><tr><th>#</th><th>Huésped</th><th>Habitación</th><th>Entrada</th><th>Salida</th><th>Estado</th><th>Total</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var r in Model)
+    {
+        <tr>
+            <td>@r.ReservaId</td><td>@r.Huesped.NombreCompleto</td><td>@r.Habitacion.Numero</td>
+            <td>@r.FechaEntrada.ToString("dd/MM/yyyy")</td><td>@r.FechaSalida.ToString("dd/MM/yyyy")</td>
+            <td>@r.Estado</td><td>@r.Total.ToString("C")</td>
+            <td class="text-end">
+            @if (r.Estado == "Activa")
+            {
+                <form asp-action="Finalizar" asp-route-id="@r.ReservaId" method="post" class="d-inline"><button class="btn btn-sm btn-outline-success">Finalizar</button></form>
+                <form asp-action="Cancelar" asp-route-id="@r.ReservaId" method="post" class="d-inline" onsubmit="return confirm('¿Cancelar reserva?');"><button class="btn btn-sm btn-outline-danger">Cancelar</button></form>
+            }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

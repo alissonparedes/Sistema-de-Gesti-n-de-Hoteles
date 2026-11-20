@@ -1,0 +1,14 @@
+@model Huesped
+@{ ViewData["Title"] = "Historial"; }
+<h2>Historial de @Model.NombreCompleto</h2>
+<p class="text-muted">@Model.Email</p>
+<table class="table table-striped">
+    <thead><tr><th>Habitación</th><th>Entrada</th><th>Salida</th><th>Estado</th><th>Total</th></tr></thead>
+    <tbody>
+    @foreach (var r in Model.Reservas.OrderByDescending(r => r.FechaEntrada))
+    {
+        <tr><td>@r.Habitacion.Numero (@r.Habitacion.Tipo)</td><td>@r.FechaEntrada.ToString("dd/MM/yyyy")</td><td>@r.FechaSalida.ToString("dd/MM/yyyy")</td><td>@r.Estado</td><td>@r.Total.ToString("C")</td></tr>
+    }
+    </tbody>
+</table>
+<a class="btn btn-secondary" asp-action="Index">Volver</a>

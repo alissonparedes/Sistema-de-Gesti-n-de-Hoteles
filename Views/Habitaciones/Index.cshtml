@@ -1,0 +1,41 @@
+@model IEnumerable<Habitacion>
+@{ ViewData["Title"] = "Habitaciones"; }
+<div class="d-flex justify-content-between mb-3">
+    <h2>Habitaciones</h2>
+    <a class="btn btn-primary" asp-action="Create">Nueva habitación</a>
+</div>
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <select name="tipo" class="form-select">
+            <option value="">Todos los tipos</option>
+            @foreach (var t in (List<string>)ViewBag.Tipos)
+            { <option value="@t" selected="@(t == (string)ViewBag.Tipo)">@t</option> }
+        </select>
+    </div>
+    <div class="col-auto">
+        <select name="disponible" class="form-select">
+            <option value="">Todas</option>
+            <option value="true" selected="@(ViewBag.Disponible == true)">Disponibles</option>
+            <option value="false" selected="@(ViewBag.Disponible == false)">No disponibles</option>
+        </select>
+    </div>
+    <div class="col-auto"><button class="btn btn-outline-secondary">Filtrar</button></div>
+</form>
+<table class="table table-striped align-middle">
+    <thead><tr><th>Número</th><th>Tipo</th><th>Precio</th><th>Disponible</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var h in Model)
+    {
+        <tr>
+            <td>@h.Numero</td><td>@h.Tipo</td><td>@h.Precio.ToString("C")</td>
+            <td>@(h.Disponible ? "Sí" : "No")</td>
+            <td class="text-end">
+                <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@h.HabitacionId">Editar</a>
+                <form asp-action="Delete" asp-route-id="@h.HabitacionId" method="post" class="d-inline" onsubmit="return confirm('¿Eliminar habitación?');">
+                    <button class="btn btn-sm btn-outline-danger">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

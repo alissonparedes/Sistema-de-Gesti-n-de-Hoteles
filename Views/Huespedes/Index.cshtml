@@ -1,0 +1,28 @@
+@model IEnumerable<Huesped>
+@{ ViewData["Title"] = "Huéspedes"; }
+<div class="d-flex justify-content-between mb-3">
+    <h2>Huéspedes</h2>
+    <a class="btn btn-primary" asp-action="Create">Nuevo huésped</a>
+</div>
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto"><input name="q" value="@ViewBag.Q" class="form-control" placeholder="Nombre, apellido o email" /></div>
+    <div class="col-auto"><button class="btn btn-outline-secondary">Buscar</button></div>
+</form>
+<table class="table table-striped align-middle">
+    <thead><tr><th>Nombre</th><th>Email</th><th>Teléfono</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var h in Model)
+    {
+        <tr>
+            <td>@h.NombreCompleto</td><td>@h.Email</td><td>@h.Telefono</td>
+            <td class="text-end">
+                <a class="btn btn-sm btn-outline-secondary" asp-action="Historial" asp-route-id="@h.HuespedId">Historial</a>
+                <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@h.HuespedId">Editar</a>
+                <form asp-action="Delete" asp-route-id="@h.HuespedId" method="post" class="d-inline" onsubmit="return confirm('¿Eliminar huésped?');">
+                    <button class="btn btn-sm btn-outline-danger">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,16 @@
+@model Habitacion
+<form asp-action="@((string)ViewContext.RouteData.Values["action"])" method="post" style="max-width:480px">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="HabitacionId" />
+    <div class="mb-3"><label asp-for="Numero" class="form-label"></label><input asp-for="Numero" class="form-control" /><span asp-validation-for="Numero" class="text-danger"></span></div>
+    <div class="mb-3">
+        <label asp-for="Tipo" class="form-label"></label>
+        <select asp-for="Tipo" class="form-select">
+            <option>Simple</option><option>Doble</option><option>Suite</option>
+        </select>
+    </div>
+    <div class="mb-3"><label asp-for="Precio" class="form-label"></label><input asp-for="Precio" class="form-control" /><span asp-validation-for="Precio" class="text-danger"></span></div>
+    <div class="form-check mb-3"><input asp-for="Disponible" class="form-check-input" /><label asp-for="Disponible" class="form-check-label"></label></div>
+    <button class="btn btn-primary">Guardar</button>
+    <a class="btn btn-secondary" asp-action="Index">Cancelar</a>
+</form>
